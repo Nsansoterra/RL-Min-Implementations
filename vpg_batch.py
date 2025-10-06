@@ -94,7 +94,6 @@ if __name__ == "__main__":
     ent_coef = 0.01
     batch_size = (num_envs*num_steps)
     minibatch_size = batch_size//4
-    epochs = 4
     #states (obs), actions, rewards, dones
     obs = torch.zeros((num_steps, num_envs) + envs.single_observation_space.shape).to(device)
     print("obs.shape", obs.shape)
@@ -154,7 +153,6 @@ if __name__ == "__main__":
         b_actions = actions.reshape((-1,) + envs.single_action_space.shape)
         b_returns = returns.reshape(-1)
 
-        b_inds = np.arange(batch_size)
         _, newlogprob, entropy = agent.get_action_and_probs(
             b_obs, b_actions.long()
         )
