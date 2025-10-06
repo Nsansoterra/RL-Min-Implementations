@@ -5,3 +5,5 @@ vpg_vid/
 policy_gradient.py
 vpgb_runs/
 vpgb_vid/
+a2c_runs/
+a2c_vid/
