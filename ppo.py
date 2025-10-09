@@ -89,7 +89,8 @@ if __name__ == "__main__":
     observation, _ = envs.reset()
     observation = torch.from_numpy(observation).float().to(device)
     agent = Agent(envs).to(device)
-    optimizer = torch.optim.Adam(agent.parameters(), lr=3e-4, eps = 1e-5)
+    lr = 3e-4
+    optimizer = torch.optim.Adam(agent.parameters(), lr=lr, eps = 1e-5)
     
 
     print(observation.shape)
@@ -123,6 +124,10 @@ if __name__ == "__main__":
     global_step = 0
 
     for update in range(1, num_updates+1):
+        frac = 1.0 - (update - 1.0) / num_updates
+        lrnow = frac * lr
+        optimizer.param_groups[0]["lr"] = lrnow
+
         for t in range(num_steps):
             global_step+=1
             obs[t] = next_obs
